@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p> ایدین</p>
+    <a href="#">ALI</a>
+    <a href="#">HADI هادی</a>
+    <p>AاIیDدIیNن</p>
+    <h1>آیدین aidin <div></div>
+    </h1>
+    <span>dddddddd</span>
+</body>
+<script>
+    //set url font
+    const font = {
+        ir: 'ir_sans.ttf'
+        ,
+        en: 'Betzmann.otf'
+    }
+
+
+
+
+    function log(e){
+        console.log(e)
+    }
+
+    var newStyle = document.createElement('style');
+    newStyle.appendChild(document.createTextNode("\
+@font-face {\
+    font-family: autofa;\
+    src: url('" + font.ir + "');\
+}\
+@font-face {\
+    font-family: autoen;\
+    src: url('" + font.en + "');\
+}\
+"));
+
+    document.head.appendChild(newStyle);
+    let GetAllElement = document.querySelectorAll('body *')
+    // let count = 0
+    for (let i = 0; i <= GetAllElement.length; i++) {
+        if (GetAllElement[i].tagName != 'SCRIPT') {
+
+            for (let a = 0,c=0; a < GetAllElement[i].childNodes.length; a++,c++) {
+                let VelueCilderin = GetAllElement[i].childNodes[a].nodeValue
+                let ChangeChar = ''
+                log(GetAllElement[i].outerHTML)
+                if (GetAllElement[i].childNodes[c].tagName) {
+                    // for(let e =0; GetAllElement[i].childNodes.length > e ; e++)
+                    ChangeChar += GetAllElement[i].outerHTML
+                } else {
+                    let StrToArr = Array.from(VelueCilderin)
+                    for (let b = 0; b < StrToArr.length; b++) {
+                        PatternEn = /[a-zA-Z]/;
+                        PatternPe = /[\u0600-\u06FF\s]/;
+                        if (PatternEn.test(StrToArr[b])) {
+                            StrToArr[b] = '<span style="font-family: autoen;">' + StrToArr[b] + '</span>'
+                            // count++
+                            ++a
+                        }
+                        else if (PatternPe.test(StrToArr[b])) {
+                            StrToArr[b] = '<span style="font-family: autofa;">' + StrToArr[b] + '</span>'
+                            // count++
+                            ++a
+                        }
+                        ChangeChar += StrToArr[b]
+                        // GetAllElement[i].childNodes[a].nodeValue = ChangeChar
+                    }
+                    log('---------')
+
+                }
+                // a=0
+                // console.log(GetAllElement[i].childNodes[c])
+                GetAllElement[i].innerHTML = ChangeChar
+
+
+            }
+
+        }
+
+    }
+
+
+
+</script>
+
+</html>
